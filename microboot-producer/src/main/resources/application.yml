@@ -1,0 +1,112 @@
+spring:
+  profiles:
+    active: dev
+
+---
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml   # 定义mybatis配置文件所在路径
+  type-aliases-package: com.darren.microboot.pojo      # 定义所有操作类的别名所在包
+  mapper-locations:                                    # 定义所有的mapper映射文件   
+  - mybatis/mapper/**/*.xml
+
+info:
+  pom.artifactId: $project.artifactId$
+  pom.version: $project.version$
+
+management:
+  security:
+    enabled: false                  # 是否打开系统的安全配置
+
+spring:
+  messages:
+    basename: i18n/Messages,i18n/Pages
+  rabbitmq:
+    addresses: 192.168.162.128
+    username: admin
+    password: admin
+    virtual-host: /  
+  jms:
+    pub-sub-domain: false       # 配置消息的类型 如果是true则表示为topic消息,如果为false,则表示为Queue消息类型
+#  activemq:
+#    user: admin
+#    password: admin
+#    broker-url: tcp://192.168.162.128:61616    # 消息组件的连接主机信息    
+  profiles: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource     # 配置当前要使用的数据源的操作类型
+    driver-class-name: com.mysql.jdbc.Driver         # 配置Mysql的驱动程序类 
+    url: jdbc:mysql://localhost:3306/mldn            # 数据库连接地址
+    username: root                                   # 数据库用户名
+    password: root                                   # 数据库连接密码
+    filters: stat,wall,log4j
+    dbcp2:                                           # 进行数据库连接池的配置
+      min-idle: 5                                    # 数据库连接池的最小维持连接数
+      initial-size: 5                                # 初始化提供的连接数
+      max-total: 5                                   # 最大的连接数
+      max-wait-millis: 200                           # 等待连接获取的最大超时时间
+  redis:
+    host: 192.168.162.128
+    port: 6379
+    password: admin
+    timeout: 1000
+    database: 0
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 100 
+  redis-two:
+    host: 192.168.162.128
+    port: 6379
+    password: admin
+    timeout: 1000
+    database: 0
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 100     
+server:
+  port: 8080
+     
+---
+
+spring:
+  messages:
+    basename: i18n/Messages,i18n/Pages
+  profiles: beta
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource     # 配置当前要使用的数据源的操作类型
+    driver-class-name: com.mysql.jdbc.Driver         # 配置Mysql的驱动程序类 
+    url: jdbc:mysql://localhost:3306/mldn            # 数据库连接地址
+    username: root                                   # 数据库用户名
+    password: root                                   # 数据库连接密码
+    dbcp2:                                           # 进行数据库连接池的配置
+      min-idle: 5                                    # 数据库连接池的最小维持连接数
+      initial-size: 5                                # 初始化提供的连接数
+      max-total: 5                                   # 最大的连接数
+      max-wait-millis: 200                           # 等待连接获取的最大超时时间
+server:
+  port: 8082
+
+---
+
+spring:
+  messages:
+    basename: i18n/Messages,i18n/Pages
+  profiles: release
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource     # 配置当前要使用的数据源的操作类型
+    driver-class-name: com.mysql.jdbc.Driver         # 配置Mysql的驱动程序类 
+    url: jdbc:mysql://localhost:3306/mldn            # 数据库连接地址
+    username: root                                   # 数据库用户名
+    password: root                                   # 数据库连接密码
+    dbcp2:                                           # 进行数据库连接池的配置
+      min-idle: 5                                    # 数据库连接池的最小维持连接数
+      initial-size: 5                                # 初始化提供的连接数
+      max-total: 5                                   # 最大的连接数
+      max-wait-millis: 200                           # 等待连接获取的最大超时时间
+server:
+  port: 8083
+  
